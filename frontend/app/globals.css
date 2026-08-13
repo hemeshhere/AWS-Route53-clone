@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+body {
+  /* AWS style light gray background */
+  background-color: #f2f3f3;
+  color: #16191f;
+}
