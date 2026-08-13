@@ -32,7 +32,7 @@ export default function HostedZonesPage() {
         return;
       }
 
-      const response = await fetch(`http://localhost:8000/api/hosted-zones?search=${searchQuery}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hosted-zones?search=${searchQuery}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }

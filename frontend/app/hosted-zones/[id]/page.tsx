@@ -39,7 +39,7 @@ export default function HostedZoneDetailsPage() {
         return;
       }
 
-      const zoneRes = await fetch(`http://localhost:8000/api/hosted-zones/${params.id}`, {
+      const zoneRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hosted-zones/${params.id}`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
 
@@ -53,7 +53,7 @@ export default function HostedZoneDetailsPage() {
       const zoneData = await zoneRes.json();
       setZone(zoneData);
 
-      const recordsRes = await fetch(`http://localhost:8000/api/hosted-zones/${params.id}/records`, {
+      const recordsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hosted-zones/${params.id}/records`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       
@@ -79,7 +79,7 @@ export default function HostedZoneDetailsPage() {
     
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:8000/api/hosted-zones/${params.id}/records/${recordId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hosted-zones/${params.id}/records/${recordId}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });

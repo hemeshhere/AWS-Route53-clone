@@ -29,7 +29,7 @@ export default function CreateRecordPage() {
           return;
         }
 
-        const response = await fetch(`http://localhost:8000/api/hosted-zones/${params.id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hosted-zones/${params.id}`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -65,7 +65,7 @@ export default function CreateRecordPage() {
       
       const fullRecordName = recordName ? `${recordName}.${zoneName}` : zoneName;
 
-      const response = await fetch(`http://localhost:8000/api/hosted-zones/${params.id}/records`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/hosted-zones/${params.id}/records`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
