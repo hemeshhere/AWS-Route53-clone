@@ -1,7 +1,4 @@
 @import "tailwindcss";
 
-body {
-  /* AWS style light gray background */
-  background-color: #f2f3f3;
-  color: #16191f;
-}
+/* This tells Tailwind v4 to trigger dark mode when the .dark class is active */
+@custom-variant dark (&:is(.dark *));

@@ -32,7 +32,8 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(hosted_zones.router, prefix="/api/hosted-zones", tags=["Hosted Zones"])
-app.include_router(dns_records.router, prefix="/api", tags=["DNS Records"])
+# The line below has been updated to include the correct /api/hosted-zones prefix
+app.include_router(dns_records.router, prefix="/api/hosted-zones", tags=["DNS Records"])
 
 @app.get("/")
 def read_root():

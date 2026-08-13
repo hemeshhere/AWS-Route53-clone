@@ -1,51 +1,59 @@
-"use client"; // This tells Next.js this component uses browser features like localStorage
+"use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { LogOut, User, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { LogOut, User } from "lucide-react";
 
 export default function Header() {
   const router = useRouter();
-  const [userName, setUserName] = useState<string | null>(null);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  // When the header loads, check if we have user data saved in localStorage
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setUserName(JSON.parse(user).name);
-    }
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleLogout = () => {
-    // Clear our saved session data
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    // Redirect to the login page
     router.push("/login");
   };
 
   return (
-    <header className="bg-[#232f3e] text-white h-12 flex items-center justify-between px-4 shrink-0 shadow-sm z-10 relative">
-      <div className="font-bold text-sm tracking-wide flex items-center gap-2">
-        <span className="text-[#ff9900] text-lg">AWS</span>
-        <span className="text-gray-100">Route 53</span>
+    <header className="bg-[#232f3e] text-white flex items-center justify-between px-4 py-2 border-b border-[#131a22]">
+      <div className="flex items-center gap-4">
+        <Link href="/" className="flex items-center gap-2 hover:text-gray-200 transition-colors">
+          <span className="text-[#ff9900] font-bold text-xl">AWS</span>
+          <span className="font-medium text-lg tracking-wide">Route 53</span>
+        </Link>
       </div>
-      
-      {userName && (
-        <div className="flex items-center gap-4 text-sm">
-          <div className="flex items-center gap-1.5 text-gray-300">
-            <User size={16} />
-            <span>{userName}</span>
-          </div>
+
+      <div className="flex items-center gap-4 text-sm">
+        {mounted && (
           <button
-            onClick={handleLogout}
-            className="flex items-center gap-1.5 text-gray-300 hover:text-white transition-colors border-l border-gray-600 pl-4"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="flex items-center gap-1 hover:bg-[#131a22] p-1.5 rounded-sm transition-colors"
+            title="Toggle theme"
           >
-            <LogOut size={16} />
-            <span>Logout</span>
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
+        )}
+        
+        <div className="flex items-center gap-1 hover:bg-[#131a22] px-2 py-1.5 rounded-sm cursor-pointer transition-colors">
+          <User size={16} />
+          <span>AWS Admin</span>
         </div>
-      )}
+        <div className="w-px h-5 bg-gray-500 mx-1"></div>
+        <button 
+          onClick={handleLogout}
+          className="flex items-center gap-1 hover:bg-[#131a22] px-2 py-1.5 rounded-sm transition-colors text-gray-300 hover:text-white"
+        >
+          <LogOut size={16} />
+          <span>Logout</span>
+        </button>
+      </div>
     </header>
   );
 }
