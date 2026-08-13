@@ -36,9 +36,13 @@ export default function LoginPage() {
       // Redirect to the dashboard and refresh to update the Header
       window.location.href = "/";
       
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
+    }  catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError("An unexpected error occurred");
+  }
+} finally {
       setLoading(false);
     }
   };
