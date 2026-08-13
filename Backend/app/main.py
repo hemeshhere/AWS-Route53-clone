@@ -44,3 +44,6 @@ def get_my_profile(current_user: models.User = Depends(get_current_user)):
         "email": current_user.email,
         "name": current_user.name
     }
+    
+    
+    
